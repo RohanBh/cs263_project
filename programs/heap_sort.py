@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import random
 
-PROFILER = "line_profiler"
+PROFILER = "profile"
 PRINT = False
 
 
@@ -57,7 +57,7 @@ def main():
 
 if PROFILER == "cProfile":
     import cProfile
-    cProfile.run("main()", "heap_sort.stats")
+    cProfile.run("main()", "heap_sort_c.stats")
 elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
@@ -65,6 +65,9 @@ elif PROFILER == "line_profiler":
     profiler_wrapper = profiler(main)
     profiler_wrapper()
     profiler.print_stats()
+elif PROFILER == "profile":
+    import profile
+    profile.run("main()", "heap_sort_p.stats")
 else:
     import sys
     print("unknown profiler!")
