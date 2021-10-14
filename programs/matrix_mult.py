@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import random
-import cProfile
+
+PROFILER = "line_profiler"
 # modified version of: https://www.geeksforgeeks.org/python-program-multiply-two-matrices/
 
 # Program to multiply two matrices using nested loops
@@ -54,4 +55,17 @@ def run():
     result = mult(A, B, n)
     print_matrix(result)
 
-cProfile.run("run()", "matrix_mult.stats")
+if PROFILER == "cProfile":
+    import cProfile
+    cProfile.run("run()", "matrix_mult.stats")
+elif PROFILER == "line_profiler":
+    # correct usage according to https://stackoverflow.com/a/43377717
+    import line_profiler
+    prof = line_profiler.LineProfiler()
+    prof_wrapper = prof(run)
+    prof_wrapper()
+    prof.print_stats()
+else:
+    import sys
+    print("unknown profiler1")
+    sys.exit(1)
