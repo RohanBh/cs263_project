@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # cython: profile=True
+# cython: language_level=3str
 import random
 
 PROFILER = "profile"
@@ -24,7 +25,8 @@ def print_array(arr):
     """
 
 # heapify
-def heapify(arr, n, i):
+def heapify(arr, int n, int i):
+    cdef int largest, l, r
     largest = i # largest value
     l = 2 * i + 1 # left
     r = 2 * i + 2 # right
@@ -39,6 +41,22 @@ def heapify(arr, n, i):
         arr[i],arr[largest] = arr[largest],arr[i] # swap
         # root.
         heapify(arr, n, largest)
+
+def heapify_base(arr, n, i):
+    largest = i # largest value
+    l = 2 * i + 1 # left
+    r = 2 * i + 2 # right
+    # if left child exists
+    if l < n and arr[i] < arr[l]:
+        largest = l
+    # if right child exits
+    if r < n and arr[largest] < arr[r]:
+        largest = r
+    # root
+    if largest != i:
+        arr[i],arr[largest] = arr[largest],arr[i] # swap
+        # root.
+        heapify_base(arr, n, largest)
 
 # sort
 def heapSort(arr):
@@ -58,23 +76,3 @@ def main():
     heapSort(arr)
     if PRINT:
         print_array(arr)
-
-"""
-if PROFILER == "cProfile":
-    import cProfile
-    cProfile.run("main()", "heap_sort_c.stats")
-elif PROFILER == "line_profiler":
-    # correct usage according to https://stackoverflow.com/a/43377717
-    import line_profiler
-    profiler = line_profiler.LineProfiler()
-    profiler_wrapper = profiler(main)
-    profiler_wrapper()
-    profiler.print_stats()
-elif PROFILER == "profile":
-    import profile
-    profile.run("main()", "heap_sort_p.stats")
-else:
-    import sys
-    print("unknown profiler!")
-    sys.exit(1)
-"""
