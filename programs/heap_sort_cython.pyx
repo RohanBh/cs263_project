@@ -3,7 +3,6 @@
 # cython: language_level=3str
 import random
 
-PROFILER = "profile"
 PRINT = False
 
 

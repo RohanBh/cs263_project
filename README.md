@@ -3,7 +3,7 @@
 
 * `programs/matrix_mult.py`: simple matrix-matrix multiplication to familiarize with profilers
 * `programs/heap_sort,py`: simple heap-sort implementation to familiarize with profilers
-* `programs/*cython*.pyx`: first attempt at profiling setup for cython
+* `programs/*cython*.pyx`: first attempts at profiling setup for cython
 * `tools/print_stats.py`: utility program to print stat dumps created by `cProfile`/`profile`
 
 ### Profilers

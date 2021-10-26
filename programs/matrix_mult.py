@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import random
 
-PROFILER = "profile"
+PROFILER = "line_profiler"
 # modified version of: https://www.geeksforgeeks.org/python-program-multiply-two-matrices/
 
 # Program to multiply two matrices using nested loops

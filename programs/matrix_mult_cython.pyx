@@ -1,7 +1,7 @@
 # cython: profile=True
+# cython: language_level=3str
 import random
 
-PROFILER = "profile"
 # modified version of: https://www.geeksforgeeks.org/python-program-multiply-two-matrices/
 
 # Program to multiply two matrices using nested loops
@@ -54,23 +54,3 @@ def run():
 
     result = mult(A, B, n)
     print_matrix(result)
-
-"""
-if PROFILER == "cProfile":
-    import cProfile
-    cProfile.run("run()", "matrix_mult_c.stats")
-elif PROFILER == "line_profiler":
-    # correct usage according to https://stackoverflow.com/a/43377717
-    import line_profiler
-    prof = line_profiler.LineProfiler()
-    prof_wrapper = prof(run)
-    prof_wrapper()
-    prof.print_stats()
-elif PROFILER == "profile":
-    import profile
-    profile.run("run()", "matrix_mult_p.stats")
-else:
-    import sys
-    print("unknown profiler1")
-    sys.exit(1)
-    """

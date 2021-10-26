@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import random
 
-PROFILER = "profile"
+PROFILER = "line_profiler"
 PRINT = False
 
 
