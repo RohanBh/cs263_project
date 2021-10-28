@@ -1,0 +1,54 @@
+-----------------------------------------------------------------------------------
+ Python, getMatrixInverse internal view
+-----------------------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 12.0795 s
+File: matrix_invert.py
+Function: getMatrixInverse at line 70
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    70                                           def getMatrixInverse(m):
+    71         1    1249108.0 1249108.0     10.3      determinant = getMatrixDeternminant(m)
+    72                                               #special case for 2x2 matrix:
+    73         1          2.0      2.0      0.0      if len(m) == 2:
+    74                                                   return [[m[1][1]/determinant, -1*m[0][1]/determinant],
+    75                                                           [-1*m[1][0]/determinant, m[0][0]/determinant]]
+    76
+    77                                               #find matrix of cofactors
+    78         1          1.0      1.0      0.0      cofactors = []
+    79        10          9.0      0.9      0.0      for r in range(len(m)):
+    80         9          5.0      0.6      0.0          cofactorRow = []
+    81        90        313.0      3.5      0.0          for c in range(len(m)):
+    82        81        791.0      9.8      0.0              minor = getMatrixMinor(m,r,c)
+    83        81   10829042.0 133691.9     89.6              cofactorRow.append(((-1)**(r+c)) * getMatrixDeternminant(minor))
+    84         9         12.0      1.3      0.0          cofactors.append(cofactorRow)
+    85         1         27.0     27.0      0.0      cofactors = transposeMatrix(cofactors)
+    86        10          3.0      0.3      0.0      for r in range(len(cofactors)):
+    87        90         56.0      0.6      0.0          for c in range(len(cofactors)):
+    88        81         88.0      1.1      0.0              cofactors[r][c] = cofactors[r][c]/determinant
+    89         1          0.0      0.0      0.0      return cofactors
+
+-----------------------------------------------------------------------------------
+ Python, complete run()
+-----------------------------------------------------------------------------------
+True
+Timer unit: 1e-06 s
+
+Total time: 11.6038 s
+File: matrix_invert.py
+Function: run at line 91
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    91                                           def run():
+    92         1          1.0      1.0      0.0      n = 9
+    93         1        429.0    429.0      0.0      A = create_matrix(n)
+    94         1   11602586.0 11602586.0    100.0      A_inv = getMatrixInverse(A)
+    95         1        543.0    543.0      0.0      res = mult(A, A_inv, n)
+    96         1        116.0    116.0      0.0      res_int = mat_to_int(res)
+    97         1         82.0     82.0      0.0      print_matrix(res_int)
+    98                                               #print_matrix(res)
+    99         1         63.0     63.0      0.0      print(check_ident(res_int))
+

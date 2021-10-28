@@ -1,0 +1,129 @@
+------------------------------------------------------------
+ Python
+------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 4.03717 s
+File: matrix_mult.py
+Function: run at line 48
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    48                                           def run():
+    49         1          1.0      1.0      0.0      n = 200
+    50         1     129963.0 129963.0      3.2      A = create_matrix(n)
+    51         1       7909.0   7909.0      0.2      print_matrix(A)
+    52         1     137113.0 137113.0      3.4      B = create_matrix(n)
+    53         1      10832.0  10832.0      0.3      print_matrix(B)
+    54
+    55         1    3733295.0 3733295.0     92.5      result = mult(A, B, n)
+    56         1      18055.0  18055.0      0.4      print_matrix(result)
+
+
+------------------------------------------------------------
+ Cython
+------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 0.69212 s
+File: profile_matrix_cython.pyx
+Function: wrapper at line 9
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     9                                           def wrapper():
+    10         1          2.0      2.0      0.0      n = 200
+    11         1     111685.0 111685.0     16.1      A = matrix_mult_cython.create_matrix(n)
+    12         1       8299.0   8299.0      1.2      matrix_mult_cython.print_matrix(A)
+    13         1     113887.0 113887.0     16.5      B = matrix_mult_cython.create_matrix(n)
+    14         1       9009.0   9009.0      1.3      matrix_mult_cython.print_matrix(B)
+    15         1     431369.0 431369.0     62.3      result = matrix_mult_cython.mult(A, B, n)
+    16         1      17869.0  17869.0      2.6      matrix_mult_cython.print_matrix(result)
+
+
+------------------------------------------------------------
+ Cython + numpy
+------------------------------------------------------------
+
+----------------------------------------------------------------------
+  Small, create non typed:
+----------------------------------------------------------------------
+
+Timer unit: 1e-06 s
+
+Total time: 0.246861 s
+File: profile_matrix_cython_np.pyx
+Function: wrapper at line 9
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     9                                           def wrapper():
+    10         1          1.0      1.0      0.0      n = 200
+    11         1     124316.0 124316.0     50.4      A = matrix_mult_cython_np.create_matrix(n)
+    12                                               #matrix_mult_cython_np.print_matrix(A)
+    13         1     122411.0 122411.0     49.6      B = matrix_mult_cython_np.create_matrix(n)
+    14                                               #matrix_mult_cython_np.print_matrix(B)
+    15         1        133.0    133.0      0.1      result = matrix_mult_cython_np.mult(A, B, n)
+    16                                               #matrix_mult_cython_np.print_matrix(result)
+
+----------------------------------------------------------------------
+  Small, create typed:
+----------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 0.229582 s
+File: profile_matrix_cython_np.pyx
+Function: wrapper at line 9
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     9                                           def wrapper():
+    10         1          2.0      2.0      0.0      n = 200
+    11         1     115439.0 115439.0     50.3      A = matrix_mult_cython_np.create_matrix(n)
+    12                                               #matrix_mult_cython_np.print_matrix(A)
+    13         1     114012.0 114012.0     49.7      B = matrix_mult_cython_np.create_matrix(n)
+    14                                               #matrix_mult_cython_np.print_matrix(B)
+    15         1        129.0    129.0      0.1      result = matrix_mult_cython_np.mult(A, B, n)
+    16                                               #matrix_mult_cython_np.print_matrix(result)
+
+----------------------------------------------------------------------
+  Big, create non typed:
+----------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 5.8143 s
+File: profile_matrix_cython_np.pyx
+Function: wrapper at line 9
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     9                                           def wrapper():
+    10         1          2.0      2.0      0.0      n = 900
+    11         1    2458279.0 2458279.0     42.3      A = matrix_mult_cython_np.create_matrix(n)
+    12                                               #matrix_mult_cython_np.print_matrix(A)
+    13         1    3354098.0 3354098.0     57.7      B = matrix_mult_cython_np.create_matrix(n)
+    14                                               #matrix_mult_cython_np.print_matrix(B)
+    15         1       1917.0   1917.0      0.0      result = matrix_mult_cython_np.mult(A, B, n)
+    16                                               #matrix_mult_cython_np.print_matrix(result)
+
+----------------------------------------------------------------------
+  Big, create typed:
+----------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 4.61633 s
+File: profile_matrix_cython_np.pyx
+Function: wrapper at line 9
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     9                                           def wrapper():
+    10         1          1.0      1.0      0.0      n = 900
+    11         1    2300071.0 2300071.0     49.8      A = matrix_mult_cython_np.create_matrix(n)
+    12                                               #matrix_mult_cython_np.print_matrix(A)
+    13         1    2314328.0 2314328.0     50.1      B = matrix_mult_cython_np.create_matrix(n)
+    14                                               #matrix_mult_cython_np.print_matrix(B)
+    15         1       1931.0   1931.0      0.0      result = matrix_mult_cython_np.mult(A, B, n)
+    16                                               #matrix_mult_cython_np.print_matrix(result)
+
+
