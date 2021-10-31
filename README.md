@@ -27,4 +27,4 @@ import pyximport
 pyximport.install()
 import your_fav_module
 `
-* compiling the profiler into the binary does not work
+* compiling the profiler into the binary does not work, since necessary information for the profilers is lost during compilation
