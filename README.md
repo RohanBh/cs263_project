@@ -18,3 +18,13 @@
 
 * Install line_profiler: `pip install line_profiler`
 * Install cython: `pip install cython`
+
+### General Notes
+
+* compiling Python to C and from C to binary has no performance advantage over importing via
+```
+import pyximport
+pyximport.install()
+import your_fav_module
+`
+* compiling the profiler into the binary does not work
