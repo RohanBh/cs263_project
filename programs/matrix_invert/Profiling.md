@@ -1,40 +1,7 @@
------------------------------------------------------------------------------------
- Python, getMatrixInverse internal view
------------------------------------------------------------------------------------
-Timer unit: 1e-06 s
+## Performance Measurements
 
-Total time: 12.0795 s
-File: matrix_invert.py
-Function: getMatrixInverse at line 70
-
-Line #      Hits         Time  Per Hit   % Time  Line Contents
-==============================================================
-    70                                           def getMatrixInverse(m):
-    71         1    1249108.0 1249108.0     10.3      determinant = getMatrixDeternminant(m)
-    72                                               #special case for 2x2 matrix:
-    73         1          2.0      2.0      0.0      if len(m) == 2:
-    74                                                   return [[m[1][1]/determinant, -1*m[0][1]/determinant],
-    75                                                           [-1*m[1][0]/determinant, m[0][0]/determinant]]
-    76
-    77                                               #find matrix of cofactors
-    78         1          1.0      1.0      0.0      cofactors = []
-    79        10          9.0      0.9      0.0      for r in range(len(m)):
-    80         9          5.0      0.6      0.0          cofactorRow = []
-    81        90        313.0      3.5      0.0          for c in range(len(m)):
-    82        81        791.0      9.8      0.0              minor = getMatrixMinor(m,r,c)
-    83        81   10829042.0 133691.9     89.6              cofactorRow.append(((-1)**(r+c)) * getMatrixDeternminant(minor))
-    84         9         12.0      1.3      0.0          cofactors.append(cofactorRow)
-    85         1         27.0     27.0      0.0      cofactors = transposeMatrix(cofactors)
-    86        10          3.0      0.3      0.0      for r in range(len(cofactors)):
-    87        90         56.0      0.6      0.0          for c in range(len(cofactors)):
-    88        81         88.0      1.1      0.0              cofactors[r][c] = cofactors[r][c]/determinant
-    89         1          0.0      0.0      0.0      return cofactors
-
-
------------------------------------------------------------------------------------
- Python, complete run()
------------------------------------------------------------------------------------
-True
+#### Pure Python
+```
 Timer unit: 1e-06 s
 
 Total time: 7.28344 s
@@ -51,12 +18,13 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     96         1         79.0     79.0      0.0      res_int = mat_to_int(res)
     97                                               #print_matrix(res_int)
     98         1         60.0     60.0      0.0      print(check_ident(res_int))
+```
 
+#### Cython
 
------------------------------------------------------------------------------------
- Cython, complete run()
------------------------------------------------------------------------------------
-True
+* no modifications, only compiled
+
+```
 Timer unit: 1e-06 s
 
 Total time: 2.03589 s
@@ -72,11 +40,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     13         1         55.0     55.0      0.0      res = matrix_invert_cython.mult(A, A_inv, n)
     14         1         76.0     76.0      0.0      res_int = matrix_invert_cython.mat_to_int(res)
     15         1         62.0     62.0      0.0      print(matrix_invert_cython.check_ident(res_int))
+```
 
+* add a few int types for loop indices except from `getMatrixInverse` and `getMatrixDeterminant`, add int type for arg of `create_matrix`
 
------------------------------------------------------------------------------------
- Cython, complete run(), some types
------------------------------------------------------------------------------------
+```
 Timer unit: 1e-06 s
 
 Total time: 1.98174 s
@@ -92,11 +60,11 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     13         1         43.0     43.0      0.0      res = matrix_invert_cython.mult(A, A_inv, n)
     14         1         41.0     41.0      0.0      res_int = matrix_invert_cython.mat_to_int(res)
     15         1         23.0     23.0      0.0      print(matrix_invert_cython.check_ident(res_int))
+```
 
+* add types to remaining loop indices
 
------------------------------------------------------------------------------------
- Cython, complete run(), all loop indices
------------------------------------------------------------------------------------
+```
 Timer unit: 1e-06 s
 
 Total time: 1.58075 s
@@ -112,11 +80,13 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     13         1         49.0     49.0      0.0      res = matrix_invert_cython.mult(A, A_inv, n)
     14         1         37.0     37.0      0.0      res_int = matrix_invert_cython.mat_to_int(res)
     15         1         24.0     24.0      0.0      print(matrix_invert_cython.check_ident(res_int))
+```
 
+* numpy version not tested: it is not possible, to do this automatically, since I had to reproduce python array manipulations for numpyarrays
 
------------------------------------------------------------------------------------
- Cython, complete run(), all loop indices, all args, cpdef statements
------------------------------------------------------------------------------------
+* add `cpdef` and some more remaining `int` types (state of `matrix_invert_cython_optim.pyx`)
+
+```
 Timer unit: 1e-06 s
 
 Total time: 1.80834 s
@@ -132,5 +102,4 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     13         1         48.0     48.0      0.0      res = matrix_invert_cython_optim.mult(A, A_inv, n)
     14         1         43.0     43.0      0.0      res_int = matrix_invert_cython_optim.mat_to_int(res)
     15         1         25.0     25.0      0.0      print(matrix_invert_cython_optim.check_ident(res_int))
-
-
+```
