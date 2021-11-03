@@ -1,0 +1,81 @@
+-------------------------------------------------------------------------------
+ Python
+-------------------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 48.1668 s
+File: canny-edge.py
+Function: main at line 109
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+   109                                           def main():
+   110         1        684.0    684.0      0.0      oparser = argparse.ArgumentParser(description="Canny Edge detector")
+   111         2         68.0     34.0      0.0      oparser.add_argument("--input", dest="input_image", required=True,
+   112         1          1.0      1.0      0.0                           help="Path containing the image")
+   113         2         60.0     30.0      0.0      oparser.add_argument("--output", dest="output_image", required=True,
+   114         1          1.0      1.0      0.0                           help="Path containing the image")
+   115         2        109.0     54.5      0.0      oparser.add_argument("--sigma", dest="sigma", default=3, required=False,
+   116         1          1.0      1.0      0.0                           help="Sigma threshold", type=int)
+   117         2         83.0     41.5      0.0      oparser.add_argument("--th1", dest="lower_thresh", default=50, required=False,
+   118         1          1.0      1.0      0.0                           help="Lower threshold for edges", type=int)
+   119         2         89.0     44.5      0.0      oparser.add_argument("--th2", dest="upper_thresh", default=100, required=False,
+   120         1         14.0     14.0      0.0                           help="Upper threshold for edges", type=int)
+   121         1        421.0    421.0      0.0      options = oparser.parse_args()
+   122
+   123         1     199590.0 199590.0      0.4      img = io.imread(options.input_image)
+   124         1      26124.0  26124.0      0.1      img = color.rgb2gray(img)
+   125
+   126         2   47737908.0 23868954.0     99.1      gauss, magnitude, weak, strong = cannyEdge(
+   127         1          3.0      3.0      0.0          img, options.sigma, options.lower_thresh, options.upper_thresh)
+   128
+   129         1      68021.0  68021.0      0.1      io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_gauss.jpg', gauss)
+   130         1      44276.0  44276.0      0.1      io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_magnitude.jpg', magnitude)
+   131         1      40047.0  40047.0      0.1      io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_weak.jpg', weak)
+   132         1      49250.0  49250.0      0.1      io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_strong.jpg', strong)
+
+
+-------------------------------------------------------------------------------
+ Cython, blank
+-------------------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 38.0203 s
+File: profile_canny_edge_cython.py
+Function: wrapper at line 14
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    14                                           def wrapper():
+    15         1      41736.0  41736.0      0.1      img = io.imread("./2011_ford_mustang_gt-2.jpg")
+    16         1      10629.0  10629.0      0.0      img = color.rgb2gray(img)
+    17         2   37777241.0 18888620.5     99.4      gauss, magnitude, weak, strong = canny_edge_cython.cannyEdge(
+    18         1          1.0      1.0      0.0              img, 3, 50, 100)
+    19         1      41286.0  41286.0      0.1      io.imsave('out_gauss.jpg', gauss)
+    20         1      52931.0  52931.0      0.1      io.imsave('out_magnitude.jpg', magnitude)
+    21         1      60128.0  60128.0      0.2      io.imsave('out_weak.jpg', weak)
+    22         1      36318.0  36318.0      0.1      io.imsave('out_strong.jpg', strong)
+
+
+-------------------------------------------------------------------------------
+ Cython, basic int and float types
+-------------------------------------------------------------------------------
+Timer unit: 1e-06 s
+
+Total time: 35.0949 s
+File: profile_canny_edge_cython.py
+Function: wrapper at line 14
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    14                                           def wrapper():
+    15         1      44760.0  44760.0      0.1      img = io.imread("./2011_ford_mustang_gt-2.jpg")
+    16         1      29253.0  29253.0      0.1      img = color.rgb2gray(img)
+    17         2   34831329.0 17415664.5     99.2      gauss, magnitude, weak, strong = canny_edge_cython.cannyEdge(
+    18         1          1.0      1.0      0.0              img, 3, 50, 100)
+    19         1      53297.0  53297.0      0.2      io.imsave('out_gauss.jpg', gauss)
+    20         1      40051.0  40051.0      0.1      io.imsave('out_magnitude.jpg', magnitude)
+    21         1      57285.0  57285.0      0.2      io.imsave('out_weak.jpg', weak)
+    22         1      38948.0  38948.0      0.1      io.imsave('out_strong.jpg', strong)
+
+
