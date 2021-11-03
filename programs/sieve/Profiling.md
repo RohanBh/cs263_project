@@ -8,15 +8,15 @@ Running `line_profiler`
 ```
 Timer unit: 1e-06 s
 
-Total time: 23.4716 s
+Total time: 23.2114 s
 File: /mnt/hdd/Projects/cs263_project/programs/sieve/sieve_of_eratosthenes.py
-Function: main at line 25
+Function: main_wrapper at line 29
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    25                                           def main():
-    26         1   23471602.0 23471602.0    100.0      sieve(20000000)
-    27         1          1.0      1.0      0.0      return
+    29                                           def main_wrapper():
+    30         1   23211368.0 23211368.0    100.0      main()
+    31         1          1.0      1.0      0.0      return
 ```
 
 ## Cython

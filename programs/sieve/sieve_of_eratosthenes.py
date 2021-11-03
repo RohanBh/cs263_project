@@ -26,6 +26,10 @@ def main():
     sieve(20000000)
     return
 
+def main_wrapper():
+    main()
+    return
+
 
 def time_main():
     import timeit
@@ -36,12 +40,12 @@ def time_main():
 def profile_main():
     import line_profiler
     prof = line_profiler.LineProfiler()
-    prof_main = prof(main)
+    prof_main = prof(main_wrapper)
     prof_main()
     prof.print_stats()
     return
 
 
 if __name__ == "__main__":
-    time_main()
-    # profile_main()
+    # time_main()
+    profile_main()
