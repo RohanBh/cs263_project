@@ -1,7 +1,3 @@
-import timeit
-
-
-
 def sieve(n=100):
     arr = [True for _ in range(n+1)]
     # i -- smallest prime so far
@@ -27,9 +23,25 @@ def sieve(n=100):
 
 
 def main():
-    sieve(200000)
+    sieve(20000000)
+    return
+
+
+def time_main():
+    import timeit
+    print(timeit.timeit(main, number=1))
+    return
+
+
+def profile_main():
+    import line_profiler
+    prof = line_profiler.LineProfiler()
+    prof_main = prof(main)
+    prof_main()
+    prof.print_stats()
     return
 
 
 if __name__ == "__main__":
-    print(timeit.timeit(main, number=100))
+    time_main()
+    # profile_main()

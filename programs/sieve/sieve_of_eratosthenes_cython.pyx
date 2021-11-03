@@ -15,15 +15,9 @@ def sieve(n=100):
                 break
         if not found:
             break
-
-    # for i in range(2, n+1):
-    #     if arr[i]:
-    #         print(i)
-    # print('Total primes:')
-    # print(len([1 for x in arr if x]) - 2)
     return
 
 
 def main():
-    sieve(200000)
+    sieve(20000000)
     return

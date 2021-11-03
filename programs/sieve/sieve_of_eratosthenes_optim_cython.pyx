@@ -1,10 +1,15 @@
 #cython: language_level=3
+from cpython cimport array
+import array
 
-cdef void sieve(int n=100):
-    cdef int arr[200000]
-    arr[:] = [1 for _ in range(200000)]
+
+cdef void sieve(int n):
+    # https://cython.readthedocs.io/en/latest/src/tutorial/array.html#safe-usage-with-memory-views
+    cdef array.array a = array.array('i', [1] * (n + 1))
+    cdef int[:] arr = a
     # i -- smallest prime so far
     cdef int i = 2
+    cdef int j
     while i <= n:
         for j in range(2*i, n+1, i):
             arr[j] = 0
@@ -21,5 +26,5 @@ cdef void sieve(int n=100):
 
 
 def main():
-    sieve(200000)
+    sieve(20000000)
     return
