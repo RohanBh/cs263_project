@@ -46,6 +46,16 @@ def profile_main():
     return
 
 
+def profile_sieve():
+    import line_profiler
+    prof = line_profiler.LineProfiler()
+    prof_sieve = prof(sieve)
+    prof_sieve(20000000)
+    prof.print_stats()
+    return
+
+
 if __name__ == "__main__":
     # time_main()
-    profile_main()
+    # profile_main()
+    profile_sieve()

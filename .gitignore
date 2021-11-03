@@ -4,4 +4,9 @@
 __pycache__
 *.swp
 *.jpg
-
+# emacs autosave files
+*~
+# compiled files
+build
+*.so
+*.c

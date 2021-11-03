@@ -9,6 +9,8 @@ cdef void sieve(int n):
     cdef int[:] arr = a
     # i -- smallest prime so far
     cdef int i = 2
+    # http://docs.cython.org/en/latest/src/userguide/pyrex_differences.html#automatic-range-conversion
+    # for loops are optimized because j is typed
     cdef int j
     while i <= n:
         for j in range(2*i, n+1, i):
