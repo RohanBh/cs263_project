@@ -152,4 +152,8 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 
 # Conclusion
-Somehow, running `line_profiler` improves the cython performance but makes the python performance much worse.
+Somehow, running `line_profiler` on `main_wrapper` improves the cython performance (compared to `timeit`) but makes the python performance much worse.
+The overheads of running the profiler (on `sieve` directly) are shown below:
+* Python: 48.1729 - 4.069404 = 44.103496s
+* Cython: 29.2323 - 3.18674 = 26.04556
+* Cython (optim): 24.012 - 1.327547 = 22.684453
