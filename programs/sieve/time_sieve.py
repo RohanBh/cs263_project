@@ -1,4 +1,5 @@
 def time_main():
+    from sieve_of_eratosthenes_cython import main
     import timeit
     print(timeit.timeit(main, number=1))
     return
