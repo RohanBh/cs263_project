@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # ref: https://github.com/adl1995/edge-detectors
 
 __author__ = "Adeel Ahmad"
@@ -88,6 +88,3 @@ def main():
     io.imsave(f'{options.output_image}_{options.sigma}_log.jpg', log)
     io.imsave(f'{options.output_image}_{options.sigma}_zero_crossing.jpg', zero_crossing)
 
-import timeit
-print(timeit.timeit(main, number=1))
-#main()

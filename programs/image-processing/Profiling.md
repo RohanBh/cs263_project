@@ -1,5 +1,7 @@
 ## Performance Measurements
 
+### Canny-Edge
+
 #### Pure Python
 ```
 Timer unit: 1e-06 s
@@ -81,3 +83,9 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
     21         1      57285.0  57285.0      0.2      io.imsave('out_weak.jpg', weak)
     22         1      38948.0  38948.0      0.1      io.imsave('out_strong.jpg', strong)
 ```
+
+### Marr Hildreth Edge
+
+* Python: 9.137s
+* Cython, no type info added: 9.288s
+* Cython, ints and one float added (current state of `marr_cython_optim.pyx`): 9.036s

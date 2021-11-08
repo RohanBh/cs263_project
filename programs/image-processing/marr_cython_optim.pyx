@@ -1,4 +1,5 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
+# cython: language_level=3str
 # ref: https://github.com/adl1995/edge-detectors
 
 __author__ = "Adeel Ahmad"
@@ -14,7 +15,7 @@ from skimage import color
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def edgesMarrHildreth(img, sigma):
+def edgesMarrHildreth(img, int sigma):
     """
             finds the edges using MarrHildreth edge detection method...
             :param im : input image
@@ -22,6 +23,8 @@ def edgesMarrHildreth(img, sigma):
             :return:
             a binary edge image...
     """
+    cdef int size, kern_size, i, j
+    cdef float normal
     size = int(2*(np.ceil(3*sigma))+1)
 
     x, y = np.meshgrid(np.arange(-size/2+1, size/2+1),
@@ -88,6 +91,3 @@ def main():
     io.imsave(f'{options.output_image}_{options.sigma}_log.jpg', log)
     io.imsave(f'{options.output_image}_{options.sigma}_zero_crossing.jpg', zero_crossing)
 
-import timeit
-print(timeit.timeit(main, number=1))
-#main()
