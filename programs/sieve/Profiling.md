@@ -3,6 +3,8 @@ We call sieve to find prime numbers up to 20M.
 
 ## Python
 Running `timeit`: 4.069404850248247
+Times (in seconds): `[5.825187674025074, 5.791226152097806, 5.780442544957623, 5.778740274952725, 5.775069592054933]`
+Median (in seconds): `5.780442544957623`
 
 Running `line_profiler` on `main_wrapper` (at the highest level of function call)
 ```
@@ -55,6 +57,8 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 ## Cython
 Running `timeit`: 3.199113440234214
+Times (in seconds): `[4.5297333700582385, 4.470563601935282, 4.471915019210428, 4.471563922939822, 4.467826897045597]`
+Median (in seconds): `4.471563922939822`
 
 Running `line_profiler` on `main_wrapper` 
 ```
@@ -101,6 +105,8 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 ## Cython Optimized (with types)
 Running `timeit`: 1.3275476680137217
+Times (in seconds): `[2.946422371082008, 2.550346456002444, 2.552981389919296, 2.550405838061124, 2.5540944999083877]`
+Median (in seconds): `2.552981389919296`
 
 Running `line_profiler` on `main_wrapper` 
 ```

@@ -33,7 +33,10 @@ def main_wrapper():
 
 def time_main():
     import timeit
-    print(timeit.timeit(main, number=1))
+    import numpy as np
+    time_arr = timeit.repeat(main, repeat=5, number=1)
+    print('Times:', time_arr)
+    print('Median:', np.median(time_arr))
     return
 
 
@@ -56,6 +59,6 @@ def profile_sieve():
 
 
 if __name__ == "__main__":
-    # time_main()
+    time_main()
     # profile_main()
-    profile_sieve()
+    # profile_sieve()
