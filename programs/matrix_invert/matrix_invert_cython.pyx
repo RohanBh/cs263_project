@@ -97,7 +97,7 @@ def getMatrixInverse(m):
     return cofactors
 
 def run():
-    n = 9
+    cdef int n = 9
     A = create_matrix(n)
     A_inv = getMatrixInverse(A)
     res = mult(A, A_inv, n)

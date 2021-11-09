@@ -15,6 +15,9 @@ def wrapper():
     print(matrix_invert_cython.check_ident(res_int))
 
 
+import timeit
+print(timeit.repeat(matrix_invert_cython.run, repeat=5, number=1))
+"""
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("matrix_invert_cython.run()", "matrix_invert_cython_c.stats")
@@ -32,3 +35,4 @@ else:
     import sys
     print("unknown profiler")
     sys.exit(1)
+"""

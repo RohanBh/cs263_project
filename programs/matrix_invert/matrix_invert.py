@@ -94,9 +94,13 @@ def run():
     A_inv = getMatrixInverse(A)
     res = mult(A, A_inv, n)
     res_int = mat_to_int(res)
-    print_matrix(res_int)
+    #print_matrix(res_int)
     print(check_ident(res_int))
 
+
+import timeit
+print(timeit.repeat(run, repeat=5, number=1))
+"""
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("run()", "matrix_invert_c.stats")
@@ -104,15 +108,15 @@ elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
     prof = line_profiler.LineProfiler()
-    """
     prof_wrapper = prof(run)
     prof_wrapper()
     """
 
-    n = 9
-    A = create_matrix(n)
-    prof_wrapper = prof(getMatrixInverse)
-    prof_wrapper(A)
+#    n = 9
+#    A = create_matrix(n)
+#    prof_wrapper = prof(getMatrixInverse)
+#    prof_wrapper(A)
+"""
 
     prof.print_stats()
 elif PROFILER == "profile":
@@ -122,3 +126,4 @@ else:
     import sys
     print("unknown profiler1")
     sys.exit(1)
+"""
