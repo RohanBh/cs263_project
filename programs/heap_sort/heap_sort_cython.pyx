@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# cython: profile=True
 # cython: language_level=3str
 import random
 

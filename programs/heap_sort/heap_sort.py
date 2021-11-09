@@ -55,6 +55,9 @@ def main():
     if PRINT:
         print_array(arr)
 
+import timeit
+print(timeit.repeat(main, repeat=5, number=1))
+"""
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("main()", "heap_sort_c.stats")
@@ -72,3 +75,4 @@ else:
     import sys
     print("unknown profiler!")
     sys.exit(1)
+"""
