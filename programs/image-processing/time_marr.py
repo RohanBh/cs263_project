@@ -4,4 +4,4 @@ pyximport.install()
 import marr_cython
 import timeit
 
-print(timeit.timeit(marr_cython.main, number=1))
+print(timeit.repeat(marr_cython.main, repeat=5, number=1))

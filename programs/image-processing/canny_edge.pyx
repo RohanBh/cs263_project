@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# cython: language_level=3str
 # reg: https://github.com/adl1995/edge-detectors
 
 __author__ = "Adeel Ahmad"

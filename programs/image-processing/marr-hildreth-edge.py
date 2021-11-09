@@ -89,5 +89,5 @@ def main():
     io.imsave(f'{options.output_image}_{options.sigma}_zero_crossing.jpg', zero_crossing)
 
 import timeit
-print(timeit.timeit(main, number=1))
+print(timeit.repeat(main, repeat=5, number=1))
 #main()
