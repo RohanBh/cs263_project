@@ -11,10 +11,7 @@ def wrapper():
     arr = heap_sort_cython.create_array(n)
     heap_sort_cython.heapSort(arr)
 
-import timeit
-print(timeit.repeat(heap_sort_cython.main, repeat=5, number=1))
 
-"""
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("heap_sort_cython.main()", "heap_sort_cython_c.stats")
@@ -28,8 +25,10 @@ elif PROFILER == "line_profiler":
 elif PROFILER == "profile":
     import profile
     profile.run("heap_sort_cython.main()", "heap_sort_cython_p.stats")
+elif PROFILER == "timeit":
+    import timeit
+    print(timeit.repeat(heap_sort_cython.main, repeat=5, number=1))
 else:
     import sys
     print("unknown profiler")
     sys.exit(1)
-"""
