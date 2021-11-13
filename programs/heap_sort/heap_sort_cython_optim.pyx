@@ -9,7 +9,7 @@ PROFILER = "profile"
 PRINT = False
 
 
-cdef int[:] create_array(int n):
+cpdef int[:] create_array(int n):
     cdef int[:] arr = array.array('i', [0] * n)
     cdef int i
     for i in range(n):
@@ -46,7 +46,7 @@ cdef void heapify(int[:] arr, int n, int i):
         heapify(arr, n, largest)
 
 # sort
-cdef void heapSort(int[:] arr):
+cpdef void heapSort(int[:] arr):
     cdef int n, i
     n = len(arr)
     # maxheap
