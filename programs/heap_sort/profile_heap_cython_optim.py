@@ -1,6 +1,6 @@
 # cython: profile=True
-import pyximport
-pyximport.install()
+#import pyximport
+#pyximport.install()
 
 import heap_sort_cython_optim
 
@@ -20,8 +20,14 @@ elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
     prof = line_profiler.LineProfiler()
+    """
     prof_wrapper = prof(wrapper)
     prof_wrapper()
+    """
+    n = 200000
+    arr = heap_sort_cython_optim.create_array(n)
+    prof_wrapper = prof(heap_sort_cython_optim.heapSort)
+    prof_wrapper(arr)
     prof.print_stats()
 elif PROFILER == "profile":
     import profile
