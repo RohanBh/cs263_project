@@ -16,7 +16,7 @@ def read_bytes(n):
     return in_bytes
 
 def run():
-    n = 20000
+    n = 200000
     write_random_bytes(n)
     read_bytes(n)
 

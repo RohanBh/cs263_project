@@ -7,7 +7,7 @@ import io_profiling_cython
 PROFILER = "line_profiler"
 
 def wrapper():
-    n = 20000
+        n = 2000000
     io_profiling_cython.write_random_bytes(n)
     io_profiling_cython.read_bytes(n)
 
