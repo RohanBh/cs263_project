@@ -62,8 +62,14 @@ elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
     profiler = line_profiler.LineProfiler()
+    """
     profiler_wrapper = profiler(main)
     profiler_wrapper()
+    """
+    n = 200000
+    arr = create_array(n)
+    profiler_wrapper = profiler(heapSort)
+    profiler_wrapper(arr)
     profiler.print_stats()
 elif PROFILER == "profile":
     import profile
