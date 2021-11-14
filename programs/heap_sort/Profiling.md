@@ -127,7 +127,7 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
  * most time is spent in heapify
  * there is also the biggest speedup
- * the array swap is in the cythonized version faster than in python ( **TODO** check whether this line is pure c)
+ * the array swap is in the cythonized version faster than in python
 
 ### heapify()
 
@@ -206,4 +206,27 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 
 * comparing the execution times of all the lines in the cython-typed example shows that the pure cython lines are in general faster than the ones with python interaction (except from the function call, but that's no surprise)
 * primitive types don't need python interactions, if all elements of an interaction are primitive
-* (normal, non numpy) arrays need bound checks -> pythoninteraction -> still faster, but not as fast as primitive types
+* (normal, non numpy) arrays need bound checks -> pythoninteraction in the error case -> still faster, but not as fast as primitive types
+
+Speedup from compilation to typed compilation by line:
+ 30 - 33  5x            \
+ 31 - 34  2x            |
+ 32 - 35  2x            |
+ 34 - 37  1x            |
+ 35 - 38  1x             \ on average 2.125
+ 37 - 40  4x             / 
+ 38 - 41  2x            |
+ 40 - 43  1x            |
+ 41 - 44  2x            |
+ 43 - 46  1.25x         /
+
+* for all lines of speedup, the amount of interaction with python decreased
+* the first three, 38-41 have no interaction at all anymore
+* 37-40, 41-44 has mostly c instructions (especially compared to the non-typed version), python interaction only for errors
+
+
+## Conclusions
+* operations with primitive types only lead to a huge speedup
+* arrays when annotated are also complete C, but modeled by structs to enable boundary checking
+* if boundary checking fails, python interaction for the error
+* the checks lead to some overhead compared to c arrays (not measured)
