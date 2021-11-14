@@ -42,22 +42,6 @@ def heapify(arr, n, i):
         # root.
         heapify(arr, n, largest)
 
-def heapify_base(arr, n, i):
-    largest = i # largest value
-    l = 2 * i + 1 # left
-    r = 2 * i + 2 # right
-    # if left child exists
-    if l < n and arr[i] < arr[l]:
-        largest = l
-    # if right child exits
-    if r < n and arr[largest] < arr[r]:
-        largest = r
-    # root
-    if largest != i:
-        arr[i],arr[largest] = arr[largest],arr[i] # swap
-        # root.
-        heapify_base(arr, n, largest)
-
 # sort
 def heapSort(arr):
     n = len(arr)

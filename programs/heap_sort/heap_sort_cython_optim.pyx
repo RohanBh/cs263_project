@@ -28,7 +28,7 @@ def print_array(arr):
     """
 
 # heapify
-cdef void heapify(int[:] arr, int n, int i):
+cpdef void heapify(int[:] arr, int n, int i):
     cdef int largest, l, r
     largest = i # largest value
     l = 2 * i + 1 # left

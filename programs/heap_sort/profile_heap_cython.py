@@ -23,10 +23,19 @@ elif PROFILER == "line_profiler":
     prof_wrapper = prof(wrapper)
     prof_wrapper()
     """
+    """
     n = 200000
     arr = heap_sort_cython.create_array(n)
     prof_wrapper = prof(heap_sort_cython.heapSort)
     prof_wrapper(arr)
+    """
+    n = 200000
+    arr = heap_sort_cython.create_array(n)
+    for i in range(n, -1, -1):
+        heap_sort_cython.heapify(arr, n, i)
+    arr[n-1], arr[0] = arr[0], arr[n-1]
+    prof_wrapper = prof(heap_sort_cython.heapify)
+    prof_wrapper(arr, n-1, 0)
     prof.print_stats()
 elif PROFILER == "profile":
     import profile

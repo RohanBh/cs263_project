@@ -66,10 +66,19 @@ elif PROFILER == "line_profiler":
     profiler_wrapper = profiler(main)
     profiler_wrapper()
     """
+    """
     n = 200000
     arr = create_array(n)
     profiler_wrapper = profiler(heapSort)
     profiler_wrapper(arr)
+    """
+    n = 200000
+    arr = create_array(n)
+    for i in range(n, -1, -1):
+        heapify(arr, n, i)
+    arr[n-1], arr[0] = arr[0], arr[n-1] # swap
+    profiler_wrapper = profiler(heapify)
+    profiler_wrapper(arr, n-1, 0)
     profiler.print_stats()
 elif PROFILER == "profile":
     import profile

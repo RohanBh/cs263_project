@@ -128,3 +128,82 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
  * most time is spent in heapify
  * there is also the biggest speedup
  * the array swap is in the cythonized version faster than in python ( **TODO** check whether this line is pure c)
+
+### heapify()
+
+* looking at `heap_sort_cython_optim.html` and `heap_sort_cython.html` show that the amount of interactions with python are drastically reduced
+* especially `heapify` and `heapSort` differ
+
+**Python**
+```
+Total time: 7.5e-05 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    23                                           def heapify(arr, n, i):
+    24        18          8.0      0.4     10.7      largest = i # largest value
+    25        18          5.0      0.3      6.7      l = 2 * i + 1 # left
+    26        18         11.0      0.6     14.7      r = 2 * i + 2 # right
+    27                                               # if left child exists
+    28        18          5.0      0.3      6.7      if l < n and arr[i] < arr[l]:
+    29        17          8.0      0.5     10.7          largest = l
+    30                                               # if right child exits
+    31        18          6.0      0.3      8.0      if r < n and arr[largest] < arr[r]:
+    32        10          4.0      0.4      5.3          largest = r
+    33                                               # root
+    34        18          5.0      0.3      6.7      if largest != i:
+    35        17          8.0      0.5     10.7          arr[i],arr[largest] = arr[largest],arr[i] # swap
+    36                                                   # root.
+    37        17         15.0      0.9     20.0          heapify(arr, n, largest)
+```
+
+**Cython**
+```
+Total time: 4.8e-05 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    29                                           def heapify(arr, n, i):
+    30        18          9.0      0.5     18.8      largest = i # largest value
+    31        18          3.0      0.2      6.2      l = 2 * i + 1 # left
+    32        18          3.0      0.2      6.2      r = 2 * i + 2 # right
+    33                                               # if left child exists
+    34        18          4.0      0.2      8.3      if l < n and arr[i] < arr[l]:
+    35        17          2.0      0.1      4.2          largest = l
+    36                                               # if right child exits
+    37        18          8.0      0.4     16.7      if r < n and arr[largest] < arr[r]:
+    38         5          2.0      0.4      4.2          largest = r
+    39                                               # root
+    40        18          3.0      0.2      6.2      if largest != i:
+    41        17          6.0      0.4     12.5          arr[i],arr[largest] = arr[largest],arr[i] # swap
+    42                                                   # root.
+    43        17          8.0      0.5     16.7          heapify(arr, n, largest)
+```
+
+**Cython - Typed**
+```
+Total time: 2.7e-05 s
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+    31                                           cpdef void heapify(int[:] arr, int n, int i):
+    32                                               cdef int largest, l, r
+    33        18          2.0      0.1      7.4      largest = i # largest value
+    34        18          2.0      0.1      7.4      l = 2 * i + 1 # left
+    35        18          2.0      0.1      7.4      r = 2 * i + 2 # right
+    36                                               # if left child exists
+    37        18          4.0      0.2     14.8      if l < n and arr[i] < arr[l]:
+    38        17          2.0      0.1      7.4          largest = l
+    39                                               # if right child exits
+    40        18          1.0      0.1      3.7      if r < n and arr[largest] < arr[r]:
+    41         6          1.0      0.2      3.7          largest = r
+    42                                               # root
+    43        18          3.0      0.2     11.1      if largest != i:
+    44        17          4.0      0.2     14.8          arr[i],arr[largest] = arr[largest],arr[i] # swap
+    45                                                   # root.
+    46        17          6.0      0.4     22.2          heapify(arr, n, largest)
+```
+
+* comparing the execution times of all the lines in the cython-typed example shows that the pure cython lines are in general faster than the ones with python interaction (except from the function call, but that's no surprise)
+* primitive types don't need python interactions, if all elements of an interaction are primitive
+* (normal, non numpy) arrays need bound checks -> pythoninteraction -> still faster, but not as fast as primitive types
