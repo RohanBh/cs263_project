@@ -31,7 +31,7 @@ cpdef bool check_ident(A):
                 return False
     return True
 
-cdef mat_to_int(A):
+cpdef mat_to_int(A):
     cdef int i, j
     B = []
     for i in range(len(A)):
@@ -42,7 +42,7 @@ cdef mat_to_int(A):
     return B
 
 # source: https://www.geeksforgeeks.org/python-program-multiply-two-matrices/
-cdef mult(A, B, int n):
+cpdef mult(A, B, int n):
     cdef int i, j, k
     result = create_matrix(n, empty=True)
     # iterating by row of A
@@ -99,7 +99,7 @@ cpdef getMatrixInverse(m):
             cofactors[r][c] = cofactors[r][c]/determinant
     return cofactors
 
-def run():
+cpdef run():
     cdef int n = 9
     A = create_matrix(n)
     A_inv = getMatrixInverse(A)
@@ -107,3 +107,8 @@ def run():
     res_int = mat_to_int(res)
     #print_matrix(res_int)
     print(check_ident(res_int))
+
+def run_wrapper():
+    # line_profiler + cython is weird
+    n = 6
+    pass
