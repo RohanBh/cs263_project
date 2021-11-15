@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
-# cython: profile=True
 # cython: language_level=3str
+# cython: linetrace=True
+# cython: binding=True
+# distutils: define_macros=CYTHON_TRACE_NOGIL=1
 import random
 
 PROFILER="line_profiler"
 
-def create_matrix(int n, empty=False):
-    cdef int i, j
+def create_matrix(n, empty=False):
     A = []
     for i in range(n):
         if empty:
@@ -19,7 +20,6 @@ def create_matrix(int n, empty=False):
     return A
 
 def check_ident(A):
-    cdef int i, j
     for i in range(len(A)):
         for j in range(len(A[i])):
             if i == j and A[i][j] != 1:
@@ -29,18 +29,15 @@ def check_ident(A):
     return True
 
 def mat_to_int(A):
-    cdef int i, j
     B = []
     for i in range(len(A)):
         B.append([])
         for j in range(len(A[i])):
             B[i].append(int(round(A[i][j], 0)))
-            #A[i][j] = int(A[i][j])
     return B
 
 # source: https://www.geeksforgeeks.org/python-program-multiply-two-matrices/
 def mult(A, B, n):
-    cdef int i, j, k
     result = create_matrix(n, empty=True)
     # iterating by row of A
     for i in range(len(A)):
@@ -64,7 +61,6 @@ def getMatrixMinor(m,i,j):
     return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
 
 def getMatrixDeternminant(m):
-    cdef int c
     #base case for 2x2 matrix
     if len(m) == 2:
         return m[0][0]*m[1][1]-m[0][1]*m[1][0]
@@ -75,7 +71,6 @@ def getMatrixDeternminant(m):
     return determinant
 
 def getMatrixInverse(m):
-    cdef int c, r
     determinant = getMatrixDeternminant(m)
     #special case for 2x2 matrix:
     if len(m) == 2:
@@ -97,7 +92,7 @@ def getMatrixInverse(m):
     return cofactors
 
 def run():
-    cdef int n = 9
+    n = 9
     A = create_matrix(n)
     A_inv = getMatrixInverse(A)
     res = mult(A, A_inv, n)

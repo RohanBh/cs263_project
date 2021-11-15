@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-# cython: profile=True
 # cython: language_level=3str
+# cython: binding=True
+# cython: linetrace=True
+# distutils: define_macros=CYTHON_TRACE_NOGIL=1
 import random
 from cpython cimport bool
 
@@ -29,7 +31,7 @@ cpdef bool check_ident(A):
                 return False
     return True
 
-def mat_to_int(A):
+cdef mat_to_int(A):
     cdef int i, j
     B = []
     for i in range(len(A)):
@@ -40,7 +42,7 @@ def mat_to_int(A):
     return B
 
 # source: https://www.geeksforgeeks.org/python-program-multiply-two-matrices/
-def mult(A, B, int n):
+cdef mult(A, B, int n):
     cdef int i, j, k
     result = create_matrix(n, empty=True)
     # iterating by row of A
@@ -58,13 +60,13 @@ cdef void print_matrix(A):
         print(r)
 
 # source: https://stackoverflow.com/a/39881366
-def transposeMatrix(m):
+cdef transposeMatrix(m):
     return list(map(list,zip(*m)))
 
-def getMatrixMinor(m, int i, int j):
+cdef getMatrixMinor(m, int i, int j):
     return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
 
-def getMatrixDeternminant(m):
+cdef getMatrixDeternminant(m):
     cdef int c
     #base case for 2x2 matrix
     if len(m) == 2:
@@ -98,7 +100,7 @@ cpdef getMatrixInverse(m):
     return cofactors
 
 def run():
-    n = 9
+    cdef int n = 9
     A = create_matrix(n)
     A_inv = getMatrixInverse(A)
     res = mult(A, A_inv, n)

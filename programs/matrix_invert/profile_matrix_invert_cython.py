@@ -1,6 +1,6 @@
 # cython: profile=True
-import pyximport
-pyximport.install()
+#import pyximport
+#pyximport.install()
 
 import matrix_invert_cython
 
@@ -15,9 +15,7 @@ def wrapper():
     print(matrix_invert_cython.check_ident(res_int))
 
 
-import timeit
-print(timeit.repeat(matrix_invert_cython.run, repeat=5, number=1))
-"""
+
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("matrix_invert_cython.run()", "matrix_invert_cython_c.stats")
@@ -25,14 +23,20 @@ elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
     prof = line_profiler.LineProfiler()
+    """
     prof_wrapper = prof(wrapper)
+    prof_wrapper()
+    """
+    prof_wrapper = prof(matrix_invert_cython.run)
     prof_wrapper()
     prof.print_stats()
 elif PROFILER == "profile":
     import profile
     profile.run("matrix_invert_cython.run()", "matrix_invert_cython_p.stats")
+elif PROFILER == "timeit":
+    import timeit
+    print(timeit.repeat(matrix_invert_cython.run, repeat=5, number=1))
 else:
     import sys
     print("unknown profiler")
     sys.exit(1)
-"""

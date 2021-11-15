@@ -98,9 +98,6 @@ def run():
     print(check_ident(res_int))
 
 
-import timeit
-print(timeit.repeat(run, repeat=5, number=1))
-"""
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("run()", "matrix_invert_c.stats")
@@ -111,19 +108,19 @@ elif PROFILER == "line_profiler":
     prof_wrapper = prof(run)
     prof_wrapper()
     """
-
-#    n = 9
-#    A = create_matrix(n)
-#    prof_wrapper = prof(getMatrixInverse)
-#    prof_wrapper(A)
-"""
-
+    n = 9
+    A = create_matrix(n)
+    prof_wrapper = prof(getMatrixInverse)
+    prof_wrapper(A)
+    """
     prof.print_stats()
 elif PROFILER == "profile":
     import profile
     profile.run("run()", "matrix_invert_p.stats")
+elif PROFILER == "timeit":
+    import timeit
+    print(timeit.repeat(run, repeat=5, number=1))
 else:
     import sys
     print("unknown profiler1")
     sys.exit(1)
-"""
