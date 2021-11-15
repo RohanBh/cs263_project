@@ -223,6 +223,7 @@ Speedup from compilation to typed compilation by line:
 * for all lines of speedup, the amount of interaction with python decreased
 * the first three, 38-41 have no interaction at all anymore
 * 37-40, 41-44 has mostly c instructions (especially compared to the non-typed version), python interaction only for errors
+(can all be seen by looking at the html files)
 
 
 ## Conclusions
