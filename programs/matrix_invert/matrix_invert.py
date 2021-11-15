@@ -105,6 +105,7 @@ elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
     prof = line_profiler.LineProfiler()
+    """
     prof_wrapper = prof(run)
     prof_wrapper()
     """
@@ -112,7 +113,6 @@ elif PROFILER == "line_profiler":
     A = create_matrix(n)
     prof_wrapper = prof(getMatrixInverse)
     prof_wrapper(A)
-    """
     prof.print_stats()
 elif PROFILER == "profile":
     import profile
