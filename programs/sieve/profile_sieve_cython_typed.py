@@ -1,7 +1,11 @@
 def time_main():
+    import pyximport
+    pyximport.install()
+
     from sieve_of_eratosthenes_optim_cython import main
     import timeit
     import numpy as np
+
     time_arr = timeit.repeat(main, repeat=5, number=1)
     print('Times:', time_arr)
     print('Median:', np.median(time_arr))
@@ -12,12 +16,9 @@ def main_wrapper():
     return
 
 def profile_main():
-    import pyximport
-    pyximport.install()
-
     from sieve_of_eratosthenes_optim_cython import main
-
     import line_profiler
+
     prof = line_profiler.LineProfiler()
     prof_main = prof(main_wrapper)
     prof_main()
@@ -27,6 +28,7 @@ def profile_main():
 def profile_sieve():
     from sieve_of_eratosthenes_optim_cython import sieve
     import line_profiler
+
     prof = line_profiler.LineProfiler()
     prof_sieve = prof(sieve)
     prof_sieve(20000000)
@@ -38,4 +40,3 @@ if __name__ == "__main__":
     time_main()
     # profile_main()
     # profile_sieve()
-

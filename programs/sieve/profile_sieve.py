@@ -1,34 +1,34 @@
+def main_wrapper():
+    main()
+    return
+
+
 def time_main():
-    import pyximport
-    pyximport.install()
-    from sieve_of_eratosthenes_cython import main
+    from sieve_of_eratosthenes import main
     import timeit
     import numpy as np
+
     time_arr = timeit.repeat(main, repeat=5, number=1)
     print('Times:', time_arr)
     print('Median:', np.median(time_arr))
     return
 
-def main_wrapper():
-    main()
-    return
 
 def profile_main():
-    import pyximport
-    pyximport.install()
-
-    from sieve_of_eratosthenes_cython import main
-
+    from sieve_of_eratosthenes import main
     import line_profiler
+
     prof = line_profiler.LineProfiler()
     prof_main = prof(main_wrapper)
     prof_main()
     prof.print_stats()
     return
 
+
 def profile_sieve():
-    from sieve_of_eratosthenes_cython import sieve
+    from sieve_of_eratosthenes import sieve
     import line_profiler
+
     prof = line_profiler.LineProfiler()
     prof_sieve = prof(sieve)
     prof_sieve(20000000)
