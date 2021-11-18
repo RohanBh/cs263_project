@@ -90,45 +90,50 @@ Line #      Hits         Time  Per Hit   % Time  Line Contents
 ```
 Timer unit: 1e-06 s
 
-Total time: 3.12945 s
+Total time: 2.9767 s
 File: sieve_of_eratosthenes_cython_typed.pyx
 Function: sieve at line 6
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
      6                                           def sieve(_n):
-     7         1          0.0      0.0      0.0      cdef int n = _n
+     7         1          1.0      1.0      0.0      cdef int n = _n
      8                                               # https://cython.readthedocs.io/en/latest/src/tutorial/array.html#safe-usage-with-memory-views
-     9         1      62575.0  62575.0      2.0      cdef array.array a = array.array('i', [1] * (n + 1))
-    10         1         13.0     13.0      0.0      cdef int[:] arr = a
+     9         1      63043.0  63043.0      2.1      cdef array.array a = array.array('i', [1] * (n + 1))
+    10         1         15.0     15.0      0.0      cdef int[:] arr = a
     11                                               # i -- smallest prime so far
     12         1          0.0      0.0      0.0      cdef int i = 2
     13                                               # http://docs.cython.org/en/latest/src/userguide/pyrex_differences.html#automatic-range-conversion
     14                                               # for loops are optimized because j is typed
     15                                               cdef int j, found
     16         1          0.0      0.0      0.0      while i <= n:
-    17   5808800    1320643.0      0.2     42.2          for j in range(2*i, n+1, i):
-    18   5659867    1165620.0      0.2     37.2              arr[j] = 0
-    19    148933      29531.0      0.2      0.9          found = 0
-    20    148933      29600.0      0.2      0.9          for j in range(i+1, n+1, 1):
-    21   1999998     402003.0      0.2     12.8              if arr[j] == 1:
-    22    148932      30015.0      0.2      1.0                  i = j
-    23    148932      29790.0      0.2      1.0                  found = 1
-    24    148932      29709.0      0.2      0.9                  break
-    25    148933      29678.0      0.2      0.9          if found == 0:
-    26         1          1.0      1.0      0.0              break
-    27
-    28         1        273.0    273.0      0.0      return
+    17                                                   # for j in range(2*i, n+1, i):
+    18                                                   # for j from 2*i <= j < n+1 by i:
+    19    148933      29323.0      0.2      1.0          j = 2 * i
+    20    148933      29912.0      0.2      1.0          while j < n + 1:
+    21   5659867    1153262.0      0.2     38.7              arr[j] = 0
+    22   5659867    1120965.0      0.2     37.7              j += i
+    23    148933      31237.0      0.2      1.0          found = 0
+    24    148933      29778.0      0.2      1.0          for j in range(i+1, n+1, 1):
+    25   1999998     400384.0      0.2     13.5              if arr[j] == 1:
+    26    148932      29763.0      0.2      1.0                  i = j
+    27    148932      29344.0      0.2      1.0                  found = 1
+    28    148932      29605.0      0.2      1.0                  break
+    29    148933      29732.0      0.2      1.0          if found == 0:
+    30         1          0.0      0.0      0.0              break
+    31
+    32         1        336.0    336.0      0.0      return
 
-Total time: 5.94803 s
+Total time: 5.82451 s
 File: sieve_of_eratosthenes_cython_typed.pyx
-Function: main at line 31
+Function: main at line 35
 
 Line #      Hits         Time  Per Hit   % Time  Line Contents
 ==============================================================
-    31                                           def main():
-    32         1    5948035.0 5948035.0    100.0      sieve(2000000)
-    33         1          0.0      0.0      0.0      return
+    35                                           def main():
+    36         1    5824507.0 5824507.0    100.0      sieve(2000000)
+    37         1          0.0      0.0      0.0      return
+
 ```
 
 Timer outputs:
@@ -140,6 +145,6 @@ Median: 0.4040722558274865
 Times: [0.2820059529040009, 0.2711405160371214, 0.26613495498895645, 0.2662159700412303, 0.264668351970613]
 Median: 0.2662159700412303
 # Cython typed
-Times: [0.1946296668611467, 0.16565347998403013, 0.15952699701301754, 0.15945811895653605, 0.15964443096891046]
-Median: 0.15964443096891046
+Times: [0.09256194299086928, 0.0762948680203408, 0.0704366760328412, 0.0706046090926975, 0.07054292690008879]
+Median: 0.0706046090926975
 ```

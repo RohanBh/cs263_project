@@ -14,8 +14,13 @@ def sieve(_n):
     # for loops are optimized because j is typed
     cdef int j, found
     while i <= n:
-        for j in range(2*i, n+1, i):
+        # for j in range(2*i, n+1, i):
+        # for j from 2*i <= j < n+1 by i:
+        #     arr[j] = 0
+        j = 2 * i
+        while j < n + 1:
             arr[j] = 0
+            j += i
         found = 0
         for j in range(i+1, n+1, 1):
             if arr[j] == 1:
