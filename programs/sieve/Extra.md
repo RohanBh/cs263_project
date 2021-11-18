@@ -19,3 +19,12 @@ __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_i); if (unlikely(!__pyx_t_6)) __PYX_ERR
 __Pyx_GOTREF(__pyx_t_6);
 ```
 TODO: Dig more deep into what the compiled code is doing for 'for loop'
+* We can turn-off index bound checks:
+```
+Times: [0.07829251396469772, 0.07497598882764578, 0.06954554095864296, 0.06930353096686304, 0.06967572495341301]
+Median: 0.06967572495341301
+```
+Unfortunately, we can not profile when we do this. The following error occurs:
+```
+AttributeError: 'builtin_function_or_method' object has no attribute '__code__'
+```
