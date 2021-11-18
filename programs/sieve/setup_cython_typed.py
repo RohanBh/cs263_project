@@ -10,10 +10,10 @@ directive_defaults['linetrace'] = True
 directive_defaults['binding'] = True
 
 extensions = [
-    Extension("sieve_of_eratosthenes_optim_cython", ["sieve_of_eratosthenes_optim_cython.pyx"], define_macros=[('CYTHON_TRACE', '1')])
+    Extension("sieve_of_eratosthenes_cython_typed", ["sieve_of_eratosthenes_cython_typed.pyx"], define_macros=[('CYTHON_TRACE', '1')])
 ]
 
 setup(
-    name='sieve_optim_cython',
+    name='sieve_cython_typed',
     ext_modules=cythonize(extensions),
 )

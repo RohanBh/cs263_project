@@ -3,7 +3,8 @@ from cpython cimport array
 import array
 
 
-cdef void sieve(int n):
+def sieve(_n):
+    cdef int n = _n
     # https://cython.readthedocs.io/en/latest/src/tutorial/array.html#safe-usage-with-memory-views
     cdef array.array a = array.array('i', [1] * (n + 1))
     cdef int[:] arr = a
@@ -28,5 +29,5 @@ cdef void sieve(int n):
 
 
 def main():
-    sieve(20000000)
+    sieve(2000000)
     return

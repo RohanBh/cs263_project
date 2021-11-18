@@ -2,7 +2,7 @@ def time_main():
     import pyximport
     pyximport.install()
 
-    from sieve_of_eratosthenes_optim_cython import main
+    from sieve_of_eratosthenes_cython_typed import main
     import timeit
     import numpy as np
 
@@ -16,7 +16,7 @@ def main_wrapper():
     return
 
 def profile_main():
-    from sieve_of_eratosthenes_optim_cython import main
+    from sieve_of_eratosthenes_cython_typed import main
     import line_profiler
 
     prof = line_profiler.LineProfiler()
@@ -26,7 +26,7 @@ def profile_main():
     return
 
 def profile_sieve():
-    from sieve_of_eratosthenes_optim_cython import sieve
+    from sieve_of_eratosthenes_cython_typed import sieve
     import line_profiler
 
     prof = line_profiler.LineProfiler()
@@ -35,8 +35,20 @@ def profile_sieve():
     prof.print_stats()
     return
 
+def profile_all():
+    from sieve_of_eratosthenes_cython_typed import main, sieve
+    import line_profiler
+
+    prof = line_profiler.LineProfiler()
+    prof.add_function(sieve)
+    prof_wrapper = prof(main)
+    prof_wrapper()
+    prof.print_stats()
+    return
+
 
 if __name__ == "__main__":
-    time_main()
+    # time_main()
     # profile_main()
     # profile_sieve()
+    profile_all()

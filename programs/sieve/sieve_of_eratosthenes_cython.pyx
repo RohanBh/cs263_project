@@ -19,5 +19,5 @@ def sieve(n=100):
 
 
 def main():
-    sieve(20000000)
+    sieve(2000000)
     return

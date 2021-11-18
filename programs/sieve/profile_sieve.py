@@ -36,7 +36,20 @@ def profile_sieve():
     return
 
 
+def profile_all():
+    from sieve_of_eratosthenes import main, sieve
+    import line_profiler
+
+    prof = line_profiler.LineProfiler()
+    prof.add_function(sieve)
+    prof_wrapper = prof(main)
+    prof_wrapper()
+    prof.print_stats()
+    return
+
+
 if __name__ == "__main__":
-    time_main()
+    # time_main()
     # profile_main()
     # profile_sieve()
+    profile_all()
