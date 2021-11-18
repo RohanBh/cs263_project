@@ -66,7 +66,7 @@ cdef transposeMatrix(m):
 cdef getMatrixMinor(m, int i, int j):
     return [row[:j] + row[j+1:] for row in (m[:i]+m[i+1:])]
 
-cdef getMatrixDeternminant(m):
+cpdef getMatrixDeternminant(m):
     cdef int c
     #base case for 2x2 matrix
     if len(m) == 2:
@@ -74,7 +74,11 @@ cdef getMatrixDeternminant(m):
 
     determinant = 0
     for c in range(len(m)):
-        determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
+        new_det = getMatrixMinor(m, 0, c)
+        new_det = getMatrixDeternminant(new_det)
+        new_det = ((-1)**c)*m[0][c]*new_det
+        determinant += new_det
+        #determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
     return determinant
 
 cpdef getMatrixInverse(m):

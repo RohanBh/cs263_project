@@ -31,6 +31,7 @@ elif PROFILER == "line_profiler":
     prof_wrapper = prof(matrix_invert_cython.run)
     prof_wrapper()
     """
+    """
     n = 9
     A = matrix_invert_cython.create_matrix(n)
     prof_wrapper = prof(matrix_invert_cython.getMatrixInverse)
@@ -38,6 +39,11 @@ elif PROFILER == "line_profiler":
     res = matrix_invert_cython.mult(A, A_inv, n)
     res_int = matrix_invert_cython.mat_to_int(res)
     print(matrix_invert_cython.check_ident(res_int))
+    """
+    n = 9
+    A = matrix_invert_cython.create_matrix(n)
+    prof_wrapper = prof(matrix_invert_cython.getMatrixDeternminant)
+    prof_wrapper(A)
     prof.print_stats()
 elif PROFILER == "profile":
     import profile

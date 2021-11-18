@@ -64,7 +64,11 @@ def getMatrixDeternminant(m):
 
     determinant = 0
     for c in range(len(m)):
-        determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
+        new_det = getMatrixMinor(m, 0, c)
+        new_det = getMatrixDeternminant(new_det)
+        new_det = ((-1)**c)*m[0][c]*new_det
+        determinant += new_det
+        #determinant += ((-1)**c)*m[0][c]*getMatrixDeternminant(getMatrixMinor(m,0,c))
     return determinant
 
 def getMatrixInverse(m):
@@ -109,9 +113,16 @@ elif PROFILER == "line_profiler":
     prof_wrapper = prof(run)
     prof_wrapper()
     """
+    """
     n = 9
     A = create_matrix(n)
     prof_wrapper = prof(getMatrixInverse)
+    prof_wrapper(A)
+    """
+
+    n = 9
+    A = create_matrix(n)
+    prof_wrapper = prof(getMatrixDeternminant)
     prof_wrapper(A)
     prof.print_stats()
 elif PROFILER == "profile":
