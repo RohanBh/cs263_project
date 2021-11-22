@@ -131,27 +131,3 @@ def main():
     io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_magnitude.jpg', magnitude)
     io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_weak.jpg', weak)
     io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_strong.jpg', strong)
-
-#main()
-import timeit
-print(timeit.repeat(main, repeat=5, number=1))
-
-"""
-if PROFILER == "cProfile":
-    import cProfile
-    cProfile.run("main()", "canny_edge_cython_c.stats")
-elif PROFILER == "line_profiler":
-    # correct usage according to https://stackoverflow.com/a/43377717
-    import line_profiler
-    prof = line_profiler.LineProfiler()
-    prof_wrapper = prof(main)
-    prof_wrapper()
-    prof.print_stats()
-elif PROFILER == "profile":
-    import profile
-    profile.run("main()", "canny_edge_cython_p.stats")
-else:
-    import sys
-    print("unknown profiler")
-    sys.exit(1)
-"""

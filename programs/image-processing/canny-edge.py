@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 from skimage import color
 from mpl_toolkits.mplot3d import Axes3D
 
-PROFILER="line_profiler"
+PROFILER="timeit"
 
 
 def cannyEdge(img, sigma, th1, th2):
@@ -132,10 +132,7 @@ def main():
     io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_strong.jpg', strong)
 
 #main()
-import timeit
-print(timeit.repeat(main, repeat=5, number=1))
 
-"""
 if PROFILER == "cProfile":
     import cProfile
     cProfile.run("main()", "canny_edge_cython_c.stats")
@@ -143,14 +140,45 @@ elif PROFILER == "line_profiler":
     # correct usage according to https://stackoverflow.com/a/43377717
     import line_profiler
     prof = line_profiler.LineProfiler()
+    """
     prof_wrapper = prof(main)
     prof_wrapper()
+    """
+
+    oparser = argparse.ArgumentParser(description="Canny Edge detector")
+    oparser.add_argument("--input", dest="input_image", required=True,
+                         help="Path containing the image")
+    oparser.add_argument("--output", dest="output_image", required=True,
+                         help="Path containing the image")
+    oparser.add_argument("--sigma", dest="sigma", default=3, required=False,
+                         help="Sigma threshold", type=int)
+    oparser.add_argument("--th1", dest="lower_thresh", default=50, required=False,
+                         help="Lower threshold for edges", type=int)
+    oparser.add_argument("--th2", dest="upper_thresh", default=100, required=False,
+                         help="Upper threshold for edges", type=int)
+    options = oparser.parse_args()
+
+    img = io.imread(options.input_image)
+    img = color.rgb2gray(img)
+
+    prof_wrapper = prof(cannyEdge)
+    #gauss, magnitude, weak, strong = cannyEdge(
+    gauss, magnitude, weak, strong = prof_wrapper(
+        img, options.sigma, options.lower_thresh, options.upper_thresh)
+
+    #io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_gauss.jpg', gauss)
+    #io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_magnitude.jpg', magnitude)
+    #io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_weak.jpg', weak)
+    #io.imsave(f'{options.output_image}_{options.sigma}_{options.lower_thresh}_{options.upper_thresh}_strong.jpg', strong)
+
     prof.print_stats()
 elif PROFILER == "profile":
     import profile
     profile.run("main()", "canny_edge_cython_p.stats")
+elif PROFILER == "timeit":
+    import timeit
+    print(timeit.repeat(main, repeat=5, number=1))
 else:
     import sys
     print("unknown profiler")
     sys.exit(1)
-"""

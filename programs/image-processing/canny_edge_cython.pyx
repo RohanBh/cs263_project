@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# cython: profile=True
 # cython: language_level=3str
 # ref: https://github.com/adl1995/edge-detectors
 
@@ -12,11 +11,17 @@ import numpy as np
 import skimage.io as io
 import matplotlib.pyplot as plt
 
+# ref: https://cython.readthedocs.io/en/latest/src/tutorial/numpy.html
+cimport numpy as np
+np.import_array()
+DTYPE = np.float64
+ctypedef np.float_t DTYPE_t
+
 from skimage import color
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def cannyEdge(img, int sigma, int th1, int th2):
+cdef cannyEdge(np.ndarray img, int sigma, int th1, int th2):
     """
     function finds the edges using Canny edge detection method...
     :param im:input image
@@ -31,6 +36,8 @@ def cannyEdge(img, int sigma, int th1, int th2):
     cdef float normal
 
     cdef int size = int(2*(np.ceil(3*sigma))+1)
+    cdef np.ndarray x, y, kernel, gauss, gx, gy, magnitude, nms, theta, weak, strong
+
 
     x, y = np.meshgrid(np.arange(-size/2+1, size/2+1),
                        np.arange(-size/2+1, size/2+1))
@@ -40,7 +47,7 @@ def cannyEdge(img, int sigma, int th1, int th2):
     kernel = np.exp(-(x**2+y**2) / (2.0*sigma**2)) / \
         normal  # calculating gaussian filter
 
-    kern_size, gauss = kernel.shape[0], np.zeros_like(img, dtype=float)
+    kern_size, gauss = kernel.shape[0], np.zeros_like(img, dtype=DTYPE)
 
     for i in range(img.shape[0]-(kern_size-1)):
         for j in range(img.shape[1]-(kern_size-1)):
@@ -50,7 +57,7 @@ def cannyEdge(img, int sigma, int th1, int th2):
     kernel, kern_size = np.array(
         [[-1, -1, -1], [0, 0, 0], [1, 1, 1]]), 3  # edge detection
     gx, gy = np.zeros_like(
-        gauss, dtype=float), np.zeros_like(gauss, dtype=float)
+        gauss, dtype=DTYPE), np.zeros_like(gauss, dtype=DTYPE)
 
     for i in range(gauss.shape[0]-(kern_size-1)):
         for j in range(gauss.shape[1]-(kern_size-1)):
@@ -110,6 +117,7 @@ def cannyEdge(img, int sigma, int th1, int th2):
 
 
 def main():
+    cdef np.ndarray img
     oparser = argparse.ArgumentParser(description="Canny Edge detector")
     oparser.add_argument("--input", dest="input_image", required=True,
                          help="Path containing the image")
