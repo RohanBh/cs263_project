@@ -1,5 +1,5 @@
-import pyximport
-pyximport.install()
+#import pyximport
+#pyximport.install()
 
 import marr_cython_optim
 import timeit

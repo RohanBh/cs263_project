@@ -11,11 +11,17 @@ import numpy as np
 import skimage.io as io
 import matplotlib.pyplot as plt
 
+# ref: https://cython.readthedocs.io/en/latest/src/tutorial/numpy.html
+cimport numpy as np
+np.import_array()
+DTYPE = np.float64
+ctypedef np.float_t DTYPE_t
+
 from skimage import color
 from mpl_toolkits.mplot3d import Axes3D
 
 
-def edgesMarrHildreth(img, int sigma):
+cdef edgesMarrHildreth(np.ndarray img, int sigma):
     """
             finds the edges using MarrHildreth edge detection method...
             :param im : input image
@@ -25,6 +31,7 @@ def edgesMarrHildreth(img, int sigma):
     """
     cdef int size, kern_size, i, j
     cdef float normal
+    #cdef np.ndarray x, y#, kernel, log, zero_crossing#, window
     size = int(2*(np.ceil(3*sigma))+1)
 
     x, y = np.meshgrid(np.arange(-size/2+1, size/2+1),
@@ -36,7 +43,7 @@ def edgesMarrHildreth(img, int sigma):
         np.exp(-(x**2+y**2) / (2.0*sigma**2)) / normal  # LoG filter
 
     kern_size = kernel.shape[0]
-    log = np.zeros_like(img, dtype=float)
+    log = np.zeros_like(img, dtype=DTYPE)
 
     # applying filter
     for i in range(img.shape[0]-(kern_size-1)):
@@ -74,6 +81,7 @@ def edgesMarrHildreth(img, int sigma):
 
 
 def main():
+    cdef np.ndarray img
     oparser = argparse.ArgumentParser(description="Marr-Hildreth Edge detector")
     oparser.add_argument("--input", dest="input_image", required=True,
                          help="Path containing the image")

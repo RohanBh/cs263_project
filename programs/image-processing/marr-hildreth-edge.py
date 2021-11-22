@@ -88,6 +88,29 @@ def main():
     io.imsave(f'{options.output_image}_{options.sigma}_log.jpg', log)
     io.imsave(f'{options.output_image}_{options.sigma}_zero_crossing.jpg', zero_crossing)
 
+
+import line_profiler
+# ref https://stackoverflow.com/a/43377717
+prof = line_profiler.LineProfiler()
+prof_wrapper = prof(edgesMarrHildreth)
+oparser = argparse.ArgumentParser(description="Marr-Hildreth Edge detector")
+oparser.add_argument("--input", dest="input_image", required=True,
+                     help="Path containing the image")
+oparser.add_argument("--output", dest="output_image", required=True,
+                     help="Path containing the image")
+oparser.add_argument("--sigma", dest="sigma", default=3, required=False,
+                     help="Sigma threshold", type=int)
+options = oparser.parse_args()
+
+img = io.imread(options.input_image)
+img = color.rgb2gray(img)
+
+prof_wrapper(img, options.sigma)
+prof.print_stats()
+
+"""
 import timeit
 print(timeit.repeat(main, repeat=5, number=1))
 #main()
+
+"""
