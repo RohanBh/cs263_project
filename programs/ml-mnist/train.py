@@ -4,7 +4,6 @@ uses the sigmoid activation function. It takes about 30s to complete one epoch. 
 90% train accuracy in 5 epochs. This training has been implemented by adapting the equations (to matrix format)
 from the book Neural Networks by Simon Haykin.
 """
-import timeit
 import mnist
 import numpy as np
 
@@ -68,14 +67,3 @@ def train():
     for _ in range(5):
         epoch(train_images, train_labels, W, B, eta=1e-2)
     return
-
-
-def time_train():
-    time_arr = timeit.repeat(train, repeat=5, number=1)
-    print('Times:', time_arr)
-    print('Median:', np.median(time_arr))
-    return
-
-
-if __name__ == "__main__":
-    time_train()
