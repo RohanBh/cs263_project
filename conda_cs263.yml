@@ -1,0 +1,10 @@
+name: cs263
+channels:
+  - defaults
+dependencies:
+  - numpy
+  - pip
+  - matplotlib
+  - cython
+  - line_profiler
+prefix: /home/user/miniconda3/envs/cs263
